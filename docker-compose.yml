@@ -1,0 +1,24 @@
+services:
+  app:
+    # Build the image using the Dockerfile in the current directory
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Map ports: HOST_PORT:CONTAINER_PORT (e.g., if your Go app uses port 8080)
+    # ports:
+    #   - "8080:8080"
+
+    # Volume Mount: This is the key for hot reloading
+    # It mounts your current local directory ('.') into the container's /app directory.
+    # Any changes on your host machine will instantly appear in the container.
+    volumes:
+      - .:/app
+    
+    # Command to run: Start the application using 'air'
+    # Air will automatically find your main Go file, build, and run it,
+    # then watch for changes to trigger a rebuild/restart.
+    command: bash
+    
+    # Keep the container running for development
+    stdin_open: true
