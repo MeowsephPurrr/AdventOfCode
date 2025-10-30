@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Remote Python 3.12.12 Docker (advent-of-code:latest)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12.11 WSL (Ubuntu): (/home/nick/.virtualenvs/AdventOfCode/bin/python)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12.11 WSL (Ubuntu): (/home/nick/.pyenv/shims/python3)" project-jdk-type="Python SDK" />
 </project>

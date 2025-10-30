@@ -3,7 +3,7 @@
   <component name="Go" enabled="true" />
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$" />
-    <orderEntry type="jdk" jdkName="Python 3.12.11 WSL (Ubuntu): (/home/nick/.virtualenvs/AdventOfCode/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12.11 WSL (Ubuntu): (/home/nick/.pyenv/shims/python3)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

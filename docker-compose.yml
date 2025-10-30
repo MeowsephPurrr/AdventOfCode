@@ -1,9 +1,9 @@
 services:
-  app:
+  go:
     # Build the image using the Dockerfile in the current directory
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./Docker/Go/Dockerfile
     
     # Map ports: HOST_PORT:CONTAINER_PORT (e.g., if your Go app uses port 8080)
     # ports:
@@ -22,3 +22,10 @@ services:
     
     # Keep the container running for development
     stdin_open: true
+
+  python:
+    image: python:3.13-slim-trixie
+    command: bash
+    stdin_open: true
+    volumes:
+      - .:/app
