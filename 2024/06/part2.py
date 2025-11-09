@@ -1,5 +1,4 @@
 import copy
-import time
 
 
 class Direction:
@@ -45,7 +44,7 @@ def do_step(map, cur_row_index, cur_col_index, move_direction):
     if map[cur_row_index][cur_col_index] == UNVISITED:
         map[cur_row_index][cur_col_index] = move_direction
     else:
-        map[cur_row_index][cur_col_index] = '+'
+        map[cur_row_index][cur_col_index] += move_direction
 
     return map
 
@@ -63,6 +62,32 @@ def get_turn_and_step(map, cur_row_index, cur_col_index, move_direction):
 
     return cur_row_index, cur_col_index, move_direction
 
+def is_block_possible(map, cur_row_index, cur_col_index, move_direction):
+    tmp_move = copy.copy(move_direction)
+    try:
+        # one interation of the loop is a step
+        while 0 <= cur_row_index < len(map) and 0 <= cur_col_index < len(map[0]):
+
+            map = do_step(map, cur_row_index, cur_col_index, move_direction)
+
+            tmp_cur_row_index, tmp_cur_col_index, move_direction = get_turn_and_step(map, cur_row_index, cur_col_index, move_direction)
+
+            if tmp_move != move_direction:
+                print('change move dir from', tmp_move, 'to', move_direction)
+                tmp_move = move_direction
+
+            if move_direction in map[tmp_cur_row_index][tmp_cur_col_index]:
+                print('')
+                draw_map(map)
+                print('')
+                return True
+
+            cur_row_index = tmp_cur_row_index
+            cur_col_index = tmp_cur_col_index
+    except:
+        pass
+    return False
+
 def move_through_map(map: list, cur_row_index: int, cur_col_index: int, move_direction: str, copied=False):
     possible_blocks = 0
     try:
@@ -73,10 +98,12 @@ def move_through_map(map: list, cur_row_index: int, cur_col_index: int, move_dir
             if not copied:
                 copied_map = copy.deepcopy(map)
                 next_row_move, next_col_move = target_move_distance(move_direction)
-                if copied_map[cur_row_index + next_row_move][cur_col_index + next_col_move] == UNVISITED:
+                if copied_map[cur_row_index + next_row_move][cur_col_index + next_col_move] == UNVISITED and not (cur_row_index + next_row_move == guard_starting_row_index and cur_col_index + next_col_move == guard_starting_col_index):
                     copied_map[cur_row_index + next_row_move][cur_col_index + next_col_move] = BLOCKAGE
-                    _, copy_possible_blocks = move_through_map(copied_map, cur_row_index, cur_col_index, move_direction, True)
-                    possible_blocks += copy_possible_blocks
+                    is_blockable = is_block_possible(copied_map, cur_row_index, cur_col_index, move_direction)
+                    if is_blockable:
+                        return map, 0
+                        possible_blocks += 1
 
             tmp_cur_row_index, tmp_cur_col_index, move_direction = get_turn_and_step(map, cur_row_index, cur_col_index, move_direction)
             if map[tmp_cur_row_index][tmp_cur_col_index] == move_direction:
@@ -84,6 +111,7 @@ def move_through_map(map: list, cur_row_index: int, cur_col_index: int, move_dir
 
             cur_row_index = tmp_cur_row_index
             cur_col_index = tmp_cur_col_index
+            print('possible blocks: ',possible_blocks)
     except:
         pass
 
@@ -110,6 +138,7 @@ def draw_map(map: list):
 
 
 if __name__ == '__main__':
+    print('doing stuff')
     BLOCKAGE = '#'
     UNVISITED = '.'
 
